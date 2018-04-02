@@ -1,6 +1,9 @@
 import numpy as np
 import scr.StatisticalClasses as Stat
 
+PERSPECTIVE = -1         # perspective of the house = -1; perspective of the gambler = 1
+
+
 class Game:
     def __init__(self, id, prob_head):
         self._id = id
@@ -28,7 +31,7 @@ class Game:
 
     def get_reward(self):
         # calculate the reward from playing a single game
-        return 100*self._countWins - 250
+        return (100*self._countWins - 250)*PERSPECTIVE
 
 
 class SetOfGames:
@@ -121,20 +124,26 @@ class MultipleGameSets:
         self._probs_head = prob_head  # probability of head in each coin flip
         self._n_games_in_a_set = n_games_in_a_set  # number of games in each set
 
+        self._rewards = ()
         self._totalRewards = [] # create an empty list where rewards will be stored
         self._sumStat_totalRewards = None
 
     def simulation(self):
-        for i in self._ids:
+        for i in range(len(self._ids)):
             # create a new set of games
-            set_of_games = SetOfGames(i, self._probs_head, self._n_games_in_a_set)
+            set_of_games = SetOfGames(self._ids[i], self._probs_head[i], self._n_games_in_a_set[i])
             # simulate the set of games using 20 flips
             outcomes = set_of_games.simulation()
+            self._rewards = outcomes.get_total_reward()
             # store the total reward from this game set
             self._totalRewards.append(outcomes.get_total_reward())
 
         # summary statistics of total rewards
         self._sumStat_totalRewards = Stat.SummaryStat("Mean Rewards", self._totalRewards)
+
+    # get the mean of total rewards
+    def get_rewards(self):
+        return self._rewards
 
     # get the mean of total rewards
     def get_mean_total_reward(self):
