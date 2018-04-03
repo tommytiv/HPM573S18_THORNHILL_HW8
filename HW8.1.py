@@ -1,4 +1,4 @@
-import Coin_Toss as Cls
+import Coin_Toss1 as Cls
 import scr.FormatFunctions as Format
 import scr.FigureSupport as Figs
 import scr.StatisticalClasses as Stat
