@@ -1,4 +1,4 @@
-import Coin_Toss2 as Cls
+import Coin_Toss as Cls
 import scr.FormatFunctions as Format
 import scr.FigureSupport as Figs
 import scr.StatisticalClasses as Stat
@@ -87,11 +87,6 @@ def print_comparative_outcomes(sim_output_fair_coin, sim_output_unfair_coin):
     )
     print("Average change in mean reward and {:.{prec}%} prediction interval:".format(1 - ALPHA, prec=0),
           estimate_CI)
-
-if Cls.PERSPECTIVE == 1:
-      print ("From the perspective of the Gambler:")
-if Cls.PERSPECTIVE == -1:
-      print("From the perspective of the House:")
 
 
 # print outcomes of each cohort
